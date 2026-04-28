@@ -12,11 +12,13 @@ const {
   getAllProducts,
   deleteProduct,
 } = require('../../controllers/productController');
+const { addtocart, updateCartItem, deleteCartItem, getCart } = require('../../controllers/cartControllers');
 const router = express.Router();
-
+// category routes
 router.post('/createcategory', upload.single('category'), createCategory);
 // router.post("/createcategory", authMiddleware, RoleCheck(["admin"]), upload.single('category'), createCategory)
 router.get('/categories', getCategories);
+// Product routes
 router.post(
   '/create',
   upload.fields([
@@ -41,4 +43,12 @@ router.delete(
   RoleCheck(['admin']),
   deleteProduct,
 );
+
+// Cart Routes
+
+router.post('/addtocart', authMiddleware, addtocart);
+router.put('/updatecart', authMiddleware, updateCartItem);
+router.delete('/deletecartitem/:productId', authMiddleware, deleteCartItem);
+router.get('/getcart', authMiddleware, getCart);
+
 module.exports = router;
